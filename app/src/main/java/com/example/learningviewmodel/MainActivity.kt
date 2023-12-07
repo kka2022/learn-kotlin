@@ -8,11 +8,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,32 +41,59 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                     shadowElevation = 8.dp
                 ) {
-                    LearningViewmodel()
+                    NamesList()
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LearningViewmodel() {
+fun NamesList() {
+    val nameViewModel = viewModel<NameViewModel>()
+    val newName = nameViewModel.newName
 
-    val clickViewModel = viewModel<ClickViewModel>()
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = clickViewModel.clickTimes.toString(), fontSize = 40.sp)
+        TextField(
+            value = newName, onValueChange = {
+                nameViewModel.updateNewName(it)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(text = "New Name")}
+        )
         Spacer(modifier = Modifier.size(30.dp))
-        Button(onClick = { clickViewModel.incrementClickTimes() }) {
-            Text(text = "Clicked ${clickViewModel.clickTimes} times", fontSize = 30.sp)
+        Button(onClick = { nameViewModel.updateList(newName) }) {
+            Text(text = "Add name to list", fontSize = 24.sp)
+        }
+        Spacer(modifier = Modifier.size(30.dp))
+        LazyColumn() {
+            items(nameViewModel.namesList) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .padding(4.dp)
+                ) {
+                    Text(
+                        text = it,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
         }
     }
 }
 
+
 @Preview
 @Composable
 fun DefaultPreview() {
-    LearningViewmodel()
+    NamesList()
 }
