@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.learningviewmodel.NameViewModel
+import com.example.learningviewmodel.Person
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +46,7 @@ fun HomeScreen(navController: NavHostController, nameViewModel: NameViewModel) {
         Spacer(modifier = Modifier.size(30.dp))
         Button(
             onClick = {
-//                nameViewModel.updateList(newName)
+                nameViewModel.updateList(Person(name = newName, hobby = "Click to update"))
                 nameViewModel.updateNewName("")
             }
         ) {

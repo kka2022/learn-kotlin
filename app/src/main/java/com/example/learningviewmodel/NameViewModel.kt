@@ -15,10 +15,6 @@ class NameViewModel : ViewModel() {
             Person(name = "David", hobby = "Cooking"),
             Person(name = "Eva", hobby = "Photography"),
             Person(name = "Frank", hobby = "Gardening"),
-            Person(name = "Grace", hobby = "Cycling"),
-            Person(name = "Henry", hobby = "Writing"),
-            Person(name = "Ivy", hobby = "Hiking"),
-            Person(name = "Jack", hobby = "Drawing")
         )
     )
         private set
@@ -35,13 +31,14 @@ class NameViewModel : ViewModel() {
     fun updateNewHobby(hobby: String) {
         newHobby = hobby
     }
-//    fun updateList(name: String) {
-//        namesList = namesList.plus(name)
-//    }
 
-    fun deleteLastOneFromList() {
-        personList = personList.drop(1)
+    fun updateList(person: Person) {
+        personList = listOf(person).plus(personList)
     }
+
+//    fun deleteLastOneFromList() {
+//        personList = personList.drop(1)
+//    }
 
     fun updateHobbyById(id: String?, newHobby: String) {
 //        val personIndex = personList.indexOfFirst { id == it.id }
