@@ -1,9 +1,11 @@
 package com.example.learningviewmodel.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.learningviewmodel.NameViewModel
 import com.example.learningviewmodel.screens.DetailScreen
 import com.example.learningviewmodel.screens.HomeScreen
@@ -16,8 +18,15 @@ fun NamesNavigation(nameViewModel: NameViewModel) {
         composable("home") {
             HomeScreen(navController, nameViewModel)
         }
-        composable("detail") {
-            DetailScreen(navController, nameViewModel)
+        composable(
+            route = "detail/{name}",
+            arguments = listOf(
+                navArgument(name = "name",
+                    builder = { type = NavType.StringType }
+                )
+            )
+        ) { backStackEntry ->
+            DetailScreen(navController, nameViewModel, backStackEntry.arguments?.getString("name"))
         }
     }
 }

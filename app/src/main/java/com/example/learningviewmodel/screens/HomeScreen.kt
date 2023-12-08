@@ -51,23 +51,31 @@ fun HomeScreen(navController: NavHostController, nameViewModel: NameViewModel) {
             Text(text = "Add name to list", fontSize = 24.sp)
         }
         Spacer(modifier = Modifier.size(30.dp))
-        LazyColumn() {
-            items(nameViewModel.namesList) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .padding(4.dp)
-                        .clickable {
-                            navController.navigate(route = "detail")
-                        }
-                ) {
-                    Text(
-                        text = it,
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
+        NamesListComponent(nameViewModel, navController)
+    }
+}
+
+@Composable
+fun NamesListComponent(
+    nameViewModel: NameViewModel,
+    navController: NavHostController
+) {
+    LazyColumn() {
+        items(nameViewModel.namesList) { name ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .padding(4.dp)
+                    .clickable {
+                        navController.navigate(route = "detail/${name}")
+                    }
+            ) {
+                Text(
+                    text = name,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(8.dp)
+                )
             }
         }
     }
