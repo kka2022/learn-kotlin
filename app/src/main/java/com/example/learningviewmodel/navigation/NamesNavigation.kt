@@ -19,14 +19,18 @@ fun NamesNavigation(nameViewModel: NameViewModel) {
             HomeScreen(navController, nameViewModel)
         }
         composable(
-            route = "detail/{name}",
+            route = "detail/{id}",
             arguments = listOf(
-                navArgument(name = "name",
+                navArgument(name = "id",
                     builder = { type = NavType.StringType }
                 )
             )
         ) { backStackEntry ->
-            DetailScreen(navController, nameViewModel, backStackEntry.arguments?.getString("name"))
+            DetailScreen(
+                navController,
+                nameViewModel,
+                backStackEntry.arguments?.getString("id")
+            )
         }
     }
 }

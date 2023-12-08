@@ -17,6 +17,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -44,7 +45,7 @@ fun HomeScreen(navController: NavHostController, nameViewModel: NameViewModel) {
         Spacer(modifier = Modifier.size(30.dp))
         Button(
             onClick = {
-                nameViewModel.updateList(newName)
+//                nameViewModel.updateList(newName)
                 nameViewModel.updateNewName("")
             }
         ) {
@@ -61,18 +62,24 @@ fun NamesListComponent(
     navController: NavHostController
 ) {
     LazyColumn() {
-        items(nameViewModel.namesList) { name ->
+        items(nameViewModel.personList) { person ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
+                    .height(100.dp)
                     .padding(4.dp)
                     .clickable {
-                        navController.navigate(route = "detail/${name}")
+                        navController.navigate(route = "detail/${person.id}")
                     }
             ) {
                 Text(
-                    text = name,
+                    text = person.name,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp)
+                )
+                Text(
+                    text = "Hobby: ${person.hobby}",
                     fontSize = 20.sp,
                     modifier = Modifier.padding(8.dp)
                 )
